@@ -9,4 +9,6 @@ actual class FirebaseDataProvider actual constructor(messaging: FirebaseMessagin
     actual val dataFlow: Flow<Map<String, Any>> =
         messaging.remoteMessageFlow.map { message -> message.data }
 
+    actual val tokenFlow: Flow<String> = messaging.tokenFlow
+
 }

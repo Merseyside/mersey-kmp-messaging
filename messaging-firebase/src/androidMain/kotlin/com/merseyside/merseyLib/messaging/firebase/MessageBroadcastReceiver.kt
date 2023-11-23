@@ -4,8 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.RemoteMessage
-import com.merseyside.merseyLib.kotlin.logger.log
+
 
 class MessageBroadcastReceiver private constructor(private val callback: MessagingCallback) :
     BroadcastReceiver() {
@@ -33,7 +34,12 @@ class MessageBroadcastReceiver private constructor(private val callback: Messagi
         ): MessageBroadcastReceiver {
             val intentFilter = IntentFilter(MessagingService.ACTION_BROADCAST)
             return MessageBroadcastReceiver(callback).also { receiver ->
-                context.registerReceiver(receiver, intentFilter)
+                ContextCompat.registerReceiver(
+                    context,
+                    receiver,
+                    intentFilter,
+                    ContextCompat.RECEIVER_NOT_EXPORTED
+                )
             }
         }
     }

@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 expect class FirebaseDataProvider(messaging: FirebaseMessaging) {
 
     val dataFlow: Flow<Map<String, Any>>
+
+    val tokenFlow: Flow<String>
 }

@@ -3,7 +3,6 @@ plugins {
     with(catalogPlugins.plugins) {
         plugin(android.library)
         plugin(kotlin.multiplatform)
-        plugin(moko.multiplatform)
         plugin(kotlin.serialization)
         id(mersey.kotlin.extension.id())
         id(mersey.android.extension.id())
@@ -25,19 +24,17 @@ android {
 }
 
 kotlin {
-    android {
+    androidTarget {
         publishLibraryVariants("release", "debug")
         publishLibraryVariantsGroupedByFlavor = true
     }
 
-    ios()
+    // Add apple targets
+    iosArm64()
+    iosX64()
     iosSimulatorArm64()
 
-    sourceSets {
-        val iosMain by getting
-        val iosSimulatorArm64Main by getting
-        iosSimulatorArm64Main.dependsOn(iosMain)
-    }
+    applyDefaultHierarchyTemplate()
 }
 
 
@@ -64,10 +61,10 @@ dependencies {
     commonMainApi(projects.messagingCore)
 
     mppLibs.forEach { lib -> commonMainImplementation(lib) }
-    androidLibz.forEach { lib -> androidMainImplementation(lib) }
+    androidLibz.forEach { lib -> implementation(lib) }
 
-    androidMainImplementation(platform(androidLibs.firebase.bom))
-    androidMainApi(androidLibs.firebase.messaging)
+    implementation(platform(androidLibs.firebase.bom))
+    api(androidLibs.firebase.messaging)
 
     if (isLocalKotlinExtLibrary()) {
         commonMainApi(project(Modules.MultiPlatform.MerseyLibs.kotlinExt))

@@ -2,11 +2,9 @@ package com.merseyside.merseyLib.messaging.firebase
 
 import android.content.Context
 import com.google.firebase.messaging.RemoteMessage
-import com.merseyside.merseyLib.kotlin.logger.log
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.map
 
 actual class FirebaseMessaging(private val context: Context) {
 

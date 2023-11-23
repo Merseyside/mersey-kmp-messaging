@@ -4,24 +4,30 @@ import android.content.Intent
 import android.os.Build
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.merseyside.merseyLib.kotlin.logger.log
 import com.merseyside.merseyLib.kotlin.utils.safeLet
 
 class MessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        val intent = Intent(ACTION_BROADCAST).apply {
+        sendBroadcast {
             putExtra(TOKEN_KEY, token)
         }
-        sendBroadcast(intent)
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        val intent = Intent(ACTION_BROADCAST).apply {
+        sendBroadcast {
             putExtra(MESSAGE_KEY, message)
         }
+    }
+
+    private fun sendBroadcast(apply: Intent.() -> Unit) {
+        val intent = Intent(ACTION_BROADCAST).apply {
+            setPackage(packageName)
+            apply()
+        }
+
         sendBroadcast(intent)
     }
 

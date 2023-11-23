@@ -7,4 +7,7 @@ actual class FirebaseDataProvider actual constructor(messaging: FirebaseMessagin
 
     actual val dataFlow: Flow<Map<String, Any>> = TODO()
 
+    actual val tokenFlow: Flow<String>
+        get() = TODO("Not yet implemented")
+
 }
